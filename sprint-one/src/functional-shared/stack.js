@@ -24,10 +24,10 @@ stackMethods.push = function (value) {
 
 stackMethods.pop = function () {
   let popped = this.storage[this.counter - 1 ];
+
   delete this.storage[this.counter - 1];
+
   this.counter === 0 ? null : this.counter -= 1;
-
-
   return popped;
 };
 
