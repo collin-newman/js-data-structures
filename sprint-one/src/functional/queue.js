@@ -20,16 +20,18 @@ var Queue = function() {
 
   someInstance.dequeue = function() {
 
-    // if (storage[0] === undefined) {
+
     let keys = Object.keys(storage);
     let firstInLine = Math.min.apply(null, keys);
+
     console.log('keys', keys, 'firstInLine', firstInLine);
-    // delete storage[firstInLine];
-    // }
+
 
     let returner = storage[firstInLine];
     delete storage[firstInLine];
+
     console.log('storage', storage);
+
     counter === 0 ? null : counter -= 1;
 
     return returner;
