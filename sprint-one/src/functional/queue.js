@@ -14,23 +14,26 @@ var Queue = function() {
 
     storage[counter] = value;
     counter += 1;
-    console.log(storage);
+
     return value;
   };
 
   someInstance.dequeue = function() {
 
+    if (Object.keys(storage).length === 0) {
+      return;
+    }
 
     let keys = Object.keys(storage);
-    let firstInLine = Math.min.apply(null, keys);
+    let firstInLine = Math.min.apply(keys, keys);
+    console.log(keys);
 
-    console.log('keys', keys, 'firstInLine', firstInLine);
 
 
     let returner = storage[firstInLine];
     delete storage[firstInLine];
 
-    console.log('storage', storage);
+
 
     counter === 0 ? null : counter -= 1;
 
@@ -40,6 +43,5 @@ var Queue = function() {
   someInstance.size = function() {
     return counter;
   };
-
   return someInstance;
 };
