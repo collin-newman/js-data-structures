@@ -4,8 +4,9 @@ var Stack = function() {
   let instance = {};
 
   instance.counter = 0;
-  instance.extends = _.extend(instance, stackMethods);
   instance.storage = {};
+
+  _.extend(instance, stackMethods);
 
   return instance;
 };
