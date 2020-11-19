@@ -1,8 +1,37 @@
 var Stack = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
+  var instance = Object.create(stackMethods);
+
+  instance.storage = {};
+  instance.storageSize = 0;
+  return instance;
 };
 
-var stackMethods = {};
+var stackMethods = {
+  push: function(value) {
+    if (this.storageSize === 0) {
+      this.storage[0] = value;
+      this.storageSize++;
+    } else {
+      this.storage[this.storageSize] = value;
+      this.storageSize++;
+    }
+  },
+  pop: function() {
+    if (this.storageSize !== 0) {
+      let tail = this.storage[this.storageSize - 1];
+      delete this.storage[this.storageSize - 1];
+      this.storageSize--;
+      return tail;
+    }
+  },
+  size: function() {
+    return this.storageSize;
+  }
+};
 
+let stack = Stack();
+stack.push(1);
+stack.push(2);
+stack.push(3);
 
+console.log(stack.storage);
