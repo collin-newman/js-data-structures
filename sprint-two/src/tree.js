@@ -32,7 +32,6 @@ treeMethods.contains = function(target) {
   recursor(this.children);
 
   return result;
-
 };
 
 
