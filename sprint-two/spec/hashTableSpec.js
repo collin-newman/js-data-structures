@@ -73,4 +73,31 @@ describe('hashTable', function() {
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
   });
+
+  it('should not iterate over the entire table when retrieving', function() {
+    hashTable.insert('Bob', 30);
+    hashTable.insert('Steve', 40);
+    hashTable.insert('Chris', 30);
+    hashTable.insert('Collin', 40);
+    hashTable.insert('dkjashdqoiwduhqwodiqwhd', 30);
+    hashTable.insert('Sarah', 40);
+    hashTable.insert('Kristina', 30);
+    hashTable.insert('Lexie', 40);
+    hashTable.insert('Bobbbb', 30);
+    hashTable.insert('Ste', 40);
+    hashTable.insert('Chriiiiis', 30);
+    hashTable.insert('Cozzz', 40);
+    hashTable.insert('Jiqwpeokqwpeokqw', 30);
+    hashTable.insert('Sa', 40);
+    hashTable.insert('Kri', 30);
+    hashTable.insert('Lex', 40);
+
+    hashTable.retrieve('Lexie');
+
+    let operations = hashTable.operations;
+
+    expect(operations).to.equal(5);
+
+
+  });
 });

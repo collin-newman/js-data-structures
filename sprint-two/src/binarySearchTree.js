@@ -27,11 +27,9 @@ binarySearchTreeMethods.insert = function (insertedValue) {
 
 binarySearchTreeMethods.contains = function(target) {
   let result = false;
-
+  let thisNode = this;
   let recursor = function(node) {
-    if (result) {
-      return;
-    }
+    thisNode.operations.count++;
     if (node.value === target) {
       result = true;
       return;
@@ -39,14 +37,14 @@ binarySearchTreeMethods.contains = function(target) {
     if (node.left === null && node.right === null) {
       return;
     }
-    if (node.left !== null) {
+    if (node.left !== null && target < thisNode.value) {
       recursor(node.left);
     }
-    if (node.right !== null) {
+    if (node.right !== null && target > thisNode.value) {
       recursor(node.right);
     }
   };
-  recursor(this);
+  recursor(thisNode);
 
   return result;
 };
@@ -65,6 +63,10 @@ binarySearchTreeMethods.depthFirstLog = function (fn) {
     }
   };
   recursor(this);
+};
+
+binarySearchTreeMethods.operations = {
+  count: 0
 };
 /*
  * Complexity: What is the time complexity of the above functions?

@@ -1,8 +1,7 @@
-
-
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
+  this.operations = 0;
 };
 
 HashTable.prototype.insert = function(k, v) {
@@ -24,6 +23,7 @@ HashTable.prototype.retrieve = function(k) {
 
   if (Array.isArray(this._storage.get(index))) {
     for (let i = 0; i < this._storage.get(index).length; i++) {
+      this.operations ++;
       if (this._storage.get(index)[i].includes(k)) {
         return this._storage.get(index)[i][1];
       }
@@ -35,8 +35,6 @@ HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage.set(index, undefined);
 };
-
-
 
 /*
  * Complexity: What is the time complexity of the above functions?
