@@ -1,9 +1,8 @@
-var Tree = function(value) {
+var Tree = function(value, parent = null) {
   var newTree = {};
   newTree.value = value;
-
-  // your code here
-  newTree.children = []; // fix me
+  newTree.parent = parent;
+  newTree.children = [];
   _.extend(newTree, treeMethods);
 
   return newTree;
@@ -12,9 +11,8 @@ var Tree = function(value) {
 var treeMethods = {};
 
 treeMethods.addChild = function(value) {
-  let child = Tree(value);
+  let child = Tree(value, this.value);
   this.children.push(child);
-  //we want to set value = Tree() when we make a child, and add that to newTree.children array
 };
 
 treeMethods.contains = function(target) {
