@@ -17,6 +17,11 @@ var DoublyLinkedList = function() {
 
   list.removeHead = function() {
     let oldHeadValue = list.head.value;
+    if (list.head === list.tail) {
+      list.head = null;
+      list.tail = null;
+      return 'there are no more items in linked list!';
+    }
     if (list.head.next !== null) {
       list.head = list.head.next;
     }
@@ -41,12 +46,33 @@ var DoublyLinkedList = function() {
       if (node.next === null) {
         return;
       }
-
       recursor(node.next);
     };
 
     recursor(list.head);
     return result;
+  };
+
+  list.addToHead = function(value) {
+    if (list.head === null) {
+      let newNode = Node(value);
+      list.head = newNode;
+      list.tail = newNode;
+    } else {
+      let oldHead = list.head;
+      let newNode = Node(value);
+      list.head = newNode;
+      list.head.next = oldHead;
+      oldHead.previous = newNode;
+    }
+  };
+
+  list.removeTail = function() {
+    if (list.head === null && list.tail === null) {
+      return 'cannot remove a tail-less tail!';
+    }
+    list.tail = list.tail.previous;
+    list.tail.next = null;
   };
 
   return list;
@@ -60,4 +86,3 @@ var Node = function(value) {
   node.previous = null;
   return node;
 };
-
