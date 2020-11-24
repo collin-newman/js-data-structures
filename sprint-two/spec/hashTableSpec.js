@@ -48,13 +48,15 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
       hashTable.insert(firstName, lastName);
-      expect(hashTable.retrieve(firstName)).to.equal(lastName);
+
+      console.log(hashTable._storage.storage());
     });
+    expect(hashTable.retrieve('Alan')).to.equal('Turing');
     expect(hashTable._limit).to.equal(16);
   });
 
@@ -97,7 +99,5 @@ describe('hashTable', function() {
     let operations = hashTable.operations;
 
     expect(operations).to.equal(5);
-
-
   });
 });

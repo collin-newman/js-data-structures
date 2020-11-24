@@ -42,11 +42,26 @@ describe('tree', function() {
   });
 
   it('each node should have a parent property', function() {
+    let parent = tree;
+
     tree.addChild(5);
     tree.addChild(6);
     tree.children[0].addChild(7);
     tree.children[1].addChild(8);
-    expect(tree.children[0].parent).to.equal(5);
-    expect(tree.children[1].parent).to.equal(5);
+    expect(tree.children[0].parent).to.equal(tree);
+    expect(tree.children[1].parent).to.equal(tree);
+  });
+
+  it('should remove parent from tree while maintaining its children', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild('baby');
+
+    let baby = tree.children[0].children[0];
+    let separatedTree = tree.children[0].removeFromParent();
+
+    expect(separatedTree.parent).to.equal(null);
+    expect(separatedTree.children[0]).to.equal(baby);
   });
 });

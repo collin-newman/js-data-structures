@@ -20,7 +20,7 @@ var DoublyLinkedList = function() {
     if (list.head === list.tail) {
       list.head = null;
       list.tail = null;
-      return 'there are no more items in linked list!';
+      return oldHeadValue;
     }
     if (list.head.next !== null) {
       list.head = list.head.next;

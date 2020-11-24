@@ -29,8 +29,8 @@ var LimitedArray = function(limit) {
     }
   };
 
-  limitedArray.logger = function () {
-    console.log(storage);
+  limitedArray.storage = function () {
+    return storage;
   };
 
   var checkLimit = function(index) {
