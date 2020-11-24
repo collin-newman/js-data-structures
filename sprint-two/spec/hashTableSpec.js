@@ -98,6 +98,6 @@ describe('hashTable', function() {
 
     let operations = hashTable.operations;
 
-    expect(operations).to.equal(5);
+    expect(operations).to.equal(1);
   });
 });

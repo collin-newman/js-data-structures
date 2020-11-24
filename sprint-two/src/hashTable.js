@@ -30,7 +30,7 @@ HashTable.prototype.insert = function(k, v) {
   if (!Array.isArray(this._storage.get(index))) {
     this._storage.set(index, []);
     this.bucketCount++;
-    console.log('ratio', this.bucketCount / this._limit);
+    // console.log('ratio', this.bucketCount / this._limit);
   }
 
   for (let i = 0; i < this._storage.get(index).length; i++) {
@@ -59,7 +59,7 @@ HashTable.prototype.reHash = function(limit, storage) {
 
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  console.log('index', index);
+  // console.log('index', index);
   if (this._storage.get(index) === undefined) {
     return;
   }

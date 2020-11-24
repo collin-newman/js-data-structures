@@ -58,10 +58,26 @@ describe('tree', function() {
     tree.children[0].addChild(7);
     tree.children[0].addChild('baby');
 
-    let baby = tree.children[0].children[0];
+    let baby = tree.children[0].children[1];
     let separatedTree = tree.children[0].removeFromParent();
 
     expect(separatedTree.parent).to.equal(null);
-    expect(separatedTree.children[0]).to.equal(baby);
+    expect(separatedTree.children[1]).to.equal(baby);
+  });
+
+  it('should invoke the callback on every node in the tree', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild('baby');
+    let baby = tree.children[0].children[1];
+    console.log(baby);
+    expect(baby.value).to.equal('baby');
+
+    tree.traverse(function(item) {
+      return item + '!';
+    });
+
+    expect(baby.value).to.equal('baby!');
   });
 });
