@@ -24,6 +24,7 @@ HashTable.prototype.insert = function(k, v) {
     //iterate thru previous storage up to previous storage size
     this.reHash.call(this, oldLimit, oldStorage);
   }
+  //reset the index based on new limit size
   index = getIndexBelowMaxForKey(k, this._limit);
 
   if (!Array.isArray(this._storage.get(index))) {
@@ -42,20 +43,15 @@ HashTable.prototype.insert = function(k, v) {
 };
 
 HashTable.prototype.reHash = function(limit, storage) {
-  let originalThis = this;
+  let newThis = this;
   for (let i = 0; i < limit; i++) {
-
     if (storage.get(i) === undefined) {
       continue;
     }
-
     if (Array.isArray(Array.from(storage.get(i)))) {
       let bucket = Array.from(storage.get(i));
-
       bucket.forEach(function(item) {
-
-        let newIndex = getIndexBelowMaxForKey(item[0], this._limit);
-        originalThis.insert(item[0], item[1]);
+        newThis.insert(item[0], item[1]);
       });
     }
   }
@@ -67,12 +63,12 @@ HashTable.prototype.retrieve = function(k) {
   if (this._storage.get(index) === undefined) {
     return;
   }
-  let arr = Array.from(this._storage.get(index));
-  if (Array.isArray(arr)) {
-    for (let i = 0; i < arr.length; i++) {
+  let bucket = Array.from(this._storage.get(index));
+  if (Array.isArray(bucket)) {
+    for (let i = 0; i < bucket.length; i++) {
       this.operations ++;
-      if (arr[i].includes(k)) {
-        return arr[i][1];
+      if (bucket[i].includes(k)) {
+        return bucket[i][1];
       }
     }
   }
@@ -80,20 +76,36 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  if (!Array.isArray(this._storage.get(index))) {
-    this._storage.set(index, []);
+
+  if (this._storage.get(index) === undefined) {
+    return;
   }
+
+  let bucket = this._storage.get(index);
+
   for (let i = 0; i < this._storage.get(index).length; i++) {
     if (this._storage.get(index)[i][0] === k) {
       this._storage.get(index).splice(i, 1);
-      return;
+      if (this._storage.get(index).length === 0) {
+        this._storage.set(index, undefined);
+        this.bucketCount -= 1;
+      }
+      break;
     }
   }
-  this._storage.get(index).push([k, v]);
-};
 
-HashTable.prototype.grow = function () {
-
+  if ( this.bucketCount / this._limit < .25 ) {
+    this.bucketCount = 0;
+    //take snapshot of storage
+    let oldStorage = this._storage;
+    let oldLimit = this._limit;
+    //set new storage limit to 1/2
+    this._limit = this._limit * .5;
+    this._storage = LimitedArray(this._limit);
+    //create new storage
+    //pass oldstorage and old limit into rehash method
+    this.reHash(oldLimit, oldStorage);
+  }
 };
 
 /*
