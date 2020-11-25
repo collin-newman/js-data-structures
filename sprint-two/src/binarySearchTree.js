@@ -75,9 +75,8 @@ binarySearchTreeMethods.breadthFirstLog = function() {
   let storage = [];
   let secondStorage = [];
 
-  storage.push(this);
-
   let levelRecursor = function (nodes) {
+
     nodes.forEach(function(node) {
       result.push(node.value);
       if (node.left !== null) {
@@ -87,10 +86,8 @@ binarySearchTreeMethods.breadthFirstLog = function() {
         secondStorage.push(node.right);
       }
     });
-
     storage = [];
 
-    //iterate over the array, pushing to result each iteration
     secondStorage.forEach(function(node) {
       result.push(node.value);
       if (node.left !== null) {
@@ -100,7 +97,6 @@ binarySearchTreeMethods.breadthFirstLog = function() {
         storage.push(node.right);
       }
     });
-
     secondStorage = [];
 
     if (storage.length === 0) {
@@ -109,8 +105,8 @@ binarySearchTreeMethods.breadthFirstLog = function() {
     levelRecursor(storage);
   };
 
+  storage.push(this);
   levelRecursor(storage);
-
   return result;
 };
 /*

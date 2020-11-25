@@ -70,8 +70,6 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(1);
     binarySearchTree.insert(10);
 
-    console.log('binary', binarySearchTree);
-
     expect(binarySearchTree.breadthFirstLog()).to.eql([5, 2, 7, 1, 3, 6, 10]);
   });
 });
