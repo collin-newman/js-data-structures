@@ -35,4 +35,17 @@ describe('set', function() {
     expect(_.uniq(Object.keys(set.storage))).to.eql(Object.keys(set.storage));
   });
 
+  it('should handle objects and functions in the set', function() {
+    let func = function() {
+      console.log('hello');
+    };
+
+    let obj = {2: 'alpha'};
+
+    set.add(func);
+    set.add(obj);
+    expect(set.contains(func)).to.equal(true);
+    expect(set.contains(obj)).to.eql(true);
+  });
+
 });

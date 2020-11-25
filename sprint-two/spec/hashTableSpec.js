@@ -54,7 +54,7 @@ describe('hashTable', function() {
       var lastName = person[1];
       hashTable.insert(firstName, lastName);
 
-      console.log(hashTable._storage.storage());
+
     });
     expect(hashTable.retrieve('Alan')).to.equal('Turing');
     expect(hashTable._limit).to.equal(16);

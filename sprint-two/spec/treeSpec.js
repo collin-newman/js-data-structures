@@ -71,7 +71,6 @@ describe('tree', function() {
     tree.children[0].addChild(7);
     tree.children[0].addChild('baby');
     let baby = tree.children[0].children[1];
-    console.log(baby);
     expect(baby.value).to.equal('baby');
 
     tree.traverse(function(item) {

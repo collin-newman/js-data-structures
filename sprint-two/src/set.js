@@ -8,18 +8,18 @@ var setPrototype = {};
 
 setPrototype.add = function(item) {
   if (this.storage[item] === undefined) {
-    this.storage[item] = true;
+    this.storage[typeof item === 'object' ? JSON.stringify(item) : item.toString()] = true;
   } else {
-    return;
+    return 'item already in set!';
   }
 };
 
 setPrototype.contains = function(item) {
-  return this.storage[item] !== undefined ? true : false;
+  return this.storage[typeof item === 'object' ? JSON.stringify(item) : item.toString()] !== undefined ? true : false;
 };
 
 setPrototype.remove = function(item) {
-  if (this.storage[item] === true) {
+  if (this.storage[typeof item === 'object' ? JSON.stringify(item) : item.toString()] === true) {
     delete this.storage[item];
   }
 };
