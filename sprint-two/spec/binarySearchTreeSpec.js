@@ -61,4 +61,17 @@ describe('binarySearchTree', function() {
     operations = binarySearchTree.operations.count;
     expect(operations).to.equal(2);
   });
+
+  it('should log an entire layer before going to the next layer', function () {
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(1);
+    binarySearchTree.insert(10);
+
+    console.log('binary', binarySearchTree);
+
+    expect(binarySearchTree.breadthFirstLog()).to.eql([5, 2, 7, 1, 3, 6, 10]);
+  });
 });

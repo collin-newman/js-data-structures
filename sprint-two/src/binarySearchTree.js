@@ -4,6 +4,7 @@ var BinarySearchTree = function(value) {
   instance.value = value;
   instance.left = null;
   instance.right = null;
+  instance.searched = false;
 
   _.extend(instance, binarySearchTreeMethods);
   return instance;
@@ -67,6 +68,50 @@ binarySearchTreeMethods.depthFirstLog = function (fn) {
 
 binarySearchTreeMethods.operations = {
   count: 0
+};
+
+binarySearchTreeMethods.breadthFirstLog = function() {
+  let result = [];
+  let storage = [];
+  let secondStorage = [];
+
+  storage.push(this);
+
+  let levelRecursor = function (nodes) {
+    nodes.forEach(function(node) {
+      result.push(node.value);
+      if (node.left !== null) {
+        secondStorage.push(node.left);
+      }
+      if (node.right !== null) {
+        secondStorage.push(node.right);
+      }
+    });
+
+    storage = [];
+
+    //iterate over the array, pushing to result each iteration
+    secondStorage.forEach(function(node) {
+      result.push(node.value);
+      if (node.left !== null) {
+        storage.push(node.left);
+      }
+      if (node.right !== null) {
+        storage.push(node.right);
+      }
+    });
+
+    secondStorage = [];
+
+    if (storage.length === 0) {
+      return;
+    }
+    levelRecursor(storage);
+  };
+
+  levelRecursor(storage);
+
+  return result;
 };
 /*
  * Complexity: What is the time complexity of the above functions?
