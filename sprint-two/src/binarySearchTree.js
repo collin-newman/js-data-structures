@@ -4,7 +4,8 @@ var BinarySearchTree = function(value) {
   instance.value = value;
   instance.left = null;
   instance.right = null;
-  instance.searched = false;
+  instance.depth = 1;
+  instance.parent = null;
 
   _.extend(instance, binarySearchTreeMethods);
   return instance;
@@ -13,14 +14,22 @@ var BinarySearchTree = function(value) {
 let binarySearchTreeMethods = {};
 
 binarySearchTreeMethods.insert = function (insertedValue) {
+
   if (insertedValue < this.value && this.left === null) {
     this.left = BinarySearchTree(insertedValue);
+    this.left.parent = this;
+    this.left.depth = this.depth + 1;
     return;
+
   } else if (this.left !== null && insertedValue < this.value) {
     this.left.insert(insertedValue);
+
   } else if (insertedValue > this.value && this.right === null) {
     this.right = BinarySearchTree(insertedValue);
+    this.right.parent = this;
+    this.right.depth = this.depth + 1;
     return;
+
   } else if (this.right !== null && insertedValue > this.value) {
     this.right.insert(insertedValue);
   }
@@ -29,6 +38,7 @@ binarySearchTreeMethods.insert = function (insertedValue) {
 binarySearchTreeMethods.contains = function(target) {
   let result = false;
   let thisNode = this;
+
   let recursor = function(node) {
     thisNode.operations.count++;
     if (node.value === target) {
@@ -64,6 +74,28 @@ binarySearchTreeMethods.depthFirstLog = function (fn) {
     }
   };
   recursor(this);
+};
+
+binarySearchTreeMethods.getDepth = function () {
+  let depths = [];
+  if (this.left === null || this.right === null) {
+    depths.push(this.depth); //should always be 1
+  }
+  let recursor = function(node) {
+    if (node.left === null && node.right === null) {
+      depths.push(node.depth);
+      return;
+    }
+    if (node.left !== null) {
+      recursor(node.left);
+    }
+    if (node.right !== null) {
+      recursor(node.right);
+    }
+  };
+  recursor(this);
+
+  return {minDepth: Math.min.apply(null, depths), maxDepth: Math.max.apply(null, depths)}; //passing in depths array for math.max
 };
 
 binarySearchTreeMethods.operations = {
@@ -108,6 +140,14 @@ binarySearchTreeMethods.breadthFirstLog = function() {
   storage.push(this);
   levelRecursor(storage);
   return result;
+};
+
+binarySearchTreeMethods.rebalance = function() {
+  let nodeValues = [];
+  this.depthFirstLog(function(nodeValue) {
+    nodeValues.push(nodeValue);
+  });
+  return nodeValues;
 };
 /*
  * Complexity: What is the time complexity of the above functions?
