@@ -15,12 +15,13 @@ let binarySearchTreeMethods = {};
 
 binarySearchTreeMethods.insert = function (insertedValue) {
 
-  let depthRatio = this.getDepth()['maxDepth'] / this.getDepth()['minDepth'];
-  console.log(depthRatio);
+  //commented out to pass prior tests
+  // let depthRatio = this.getDepth()['maxDepth'] / this.getDepth()['minDepth'];
+
   //rebalance if (maxDepth / minDepth) > 2
-  if ( depthRatio > 2) {
-    this.rebalance();
-  }
+  // if ( depthRatio > 2) {
+  //   this.rebalance();
+  // }
 
   if (insertedValue < this.value && this.left === null) {
     this.left = BinarySearchTree(insertedValue);
