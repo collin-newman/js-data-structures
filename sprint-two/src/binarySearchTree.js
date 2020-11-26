@@ -142,8 +142,6 @@ binarySearchTreeMethods.breadthFirstLog = function() {
   return result;
 };
 
-
-
 binarySearchTreeMethods.rebalance = function() {
   let nodeValues = [];
   let greaterThanRoot = [];
@@ -172,9 +170,7 @@ binarySearchTreeMethods.rebalance = function() {
   this.parent = null;
   console.log(this);
 
-  //this code is essentially deciding what shape we want to rebalance into
-
-  //best shape is going
+  //this code below is essentially deciding what shape we want to rebalance into
   nodeValues.forEach(function(value) {
     if (value < rootValue) {
       lessThanRoot.push(value);
@@ -234,55 +230,47 @@ binarySearchTreeMethods.rebalance = function() {
       greaterThanRoot.splice(Math.floor((greaterThanRoot.length - 1) * (3 / 4)), 1);
     }
   }
-  let newThis = this;
+  // let newThis = this;
 
-  for (let i = 0; i < greaterThanInsertOrder.length; i++) {
-    this.insert(greaterThanInsertOrder[i]);
-  }
+  // //this works! using bind chained to end of callback
+  // greaterThanInsertOrder.forEach(function(num) {
+  //   this.insert(num);
+  // }.bind(this));
 
-  for (let i = 0; i < lessThanInsertOrder.length; i++) {
-    this.insert(lessThanInsertOrder[i]);
-  }
+  //this works,
+  greaterThanInsertOrder.forEach(function(num) {
+    this.insert(num);
+  }, this); //location of the 'this' arg in forEach API, its the argument slot after the callback...
 
-  //working code below
-  // for (let i = 1; i < lessThanRoot.length; i += 2) {
-  //   this.insert(lessThanRoot[i]);
-  // }
-  // for (let i = 0; i < lessThanRoot.length; i += 2) {
-  //   this.insert(lessThanRoot[i]);
-  // }
-  // for (let i = 1; i < greaterThanRoot.length; i += 2) {
-  //   this.insert(greaterThanRoot[i]);
-  // }
-  // for (let i = 0; i < greaterThanRoot.length; i += 2) {
-  //   this.insert(greaterThanRoot[i]);
-  // }
+  lessThanInsertOrder.forEach(function(num) {
+    this.insert(num);
+  }, this);
 
   return this;
 };
 /*
  * Complexity: What is the time complexity of the above functions?
  */
-// let binarySearchTree = BinarySearchTree(10);
-// binarySearchTree.insert(9);
-// binarySearchTree.insert(8);
-// binarySearchTree.insert(7);
-// binarySearchTree.insert(6);
-// binarySearchTree.insert(5);
-// binarySearchTree.insert(4);
-// binarySearchTree.insert(3);
-// binarySearchTree.insert(2);
-// binarySearchTree.insert(1);
-// binarySearchTree.insert(0);
-// binarySearchTree.insert(11);
-// binarySearchTree.insert(12);
-// binarySearchTree.insert(13);
-// binarySearchTree.insert(14);
-// binarySearchTree.insert(15);
-// binarySearchTree.insert(16);
-// binarySearchTree.insert(17);
-// binarySearchTree.insert(18);
-// binarySearchTree.insert(19);
-// binarySearchTree.insert(20);
+let binarySearchTree = BinarySearchTree(10);
+binarySearchTree.insert(9);
+binarySearchTree.insert(8);
+binarySearchTree.insert(7);
+binarySearchTree.insert(6);
+binarySearchTree.insert(5);
+binarySearchTree.insert(4);
+binarySearchTree.insert(3);
+binarySearchTree.insert(2);
+binarySearchTree.insert(1);
+binarySearchTree.insert(0);
+binarySearchTree.insert(11);
+binarySearchTree.insert(12);
+binarySearchTree.insert(13);
+binarySearchTree.insert(14);
+binarySearchTree.insert(15);
+binarySearchTree.insert(16);
+binarySearchTree.insert(17);
+binarySearchTree.insert(18);
+binarySearchTree.insert(19);
+binarySearchTree.insert(20);
 
-// binarySearchTree.rebalance();
+binarySearchTree.rebalance();

@@ -72,4 +72,8 @@ describe('binarySearchTree', function() {
 
     expect(binarySearchTree.breadthFirstLog()).to.eql([5, 2, 7, 1, 3, 6, 10]);
   });
+
+  it('should rebalance when the depth ratio > 2', function() {
+
+  });
 });
