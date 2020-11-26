@@ -15,6 +15,13 @@ let binarySearchTreeMethods = {};
 
 binarySearchTreeMethods.insert = function (insertedValue) {
 
+  let depthRatio = this.getDepth()['maxDepth'] / this.getDepth()['minDepth'];
+  console.log(depthRatio);
+  //rebalance if (maxDepth / minDepth) > 2
+  if ( depthRatio > 2) {
+    this.rebalance();
+  }
+
   if (insertedValue < this.value && this.left === null) {
     this.left = BinarySearchTree(insertedValue);
     this.left.parent = this;
@@ -240,7 +247,7 @@ binarySearchTreeMethods.rebalance = function() {
   //this works,
   greaterThanInsertOrder.forEach(function(num) {
     this.insert(num);
-  }, this); //location of the 'this' arg in forEach API, its the argument slot after the callback...
+  }, this); //location of the 'this' arg in forEach API, it's the argument slot after the callback...
 
   lessThanInsertOrder.forEach(function(num) {
     this.insert(num);
@@ -262,15 +269,15 @@ binarySearchTree.insert(3);
 binarySearchTree.insert(2);
 binarySearchTree.insert(1);
 binarySearchTree.insert(0);
-binarySearchTree.insert(11);
-binarySearchTree.insert(12);
-binarySearchTree.insert(13);
-binarySearchTree.insert(14);
-binarySearchTree.insert(15);
-binarySearchTree.insert(16);
-binarySearchTree.insert(17);
-binarySearchTree.insert(18);
-binarySearchTree.insert(19);
-binarySearchTree.insert(20);
+// binarySearchTree.insert(11);
+// binarySearchTree.insert(12);
+// binarySearchTree.insert(13);
+// binarySearchTree.insert(14);
+// binarySearchTree.insert(15);
+// binarySearchTree.insert(16);
+// binarySearchTree.insert(17);
+// binarySearchTree.insert(18);
+// binarySearchTree.insert(19);
+// binarySearchTree.insert(20);
 
-binarySearchTree.rebalance();
+// binarySearchTree.rebalance();
