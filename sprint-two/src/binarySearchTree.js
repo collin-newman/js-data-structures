@@ -195,6 +195,15 @@ binarySearchTreeMethods.rebalance = function() {
   let lessThanInsertOrder = [];
   let greaterThanInsertOrder = [];
 
+  //can use this function to abstract out repetitive code
+  // let rebalanceShaper = function (insertOrder, source, indexLocation) {
+  //   let index = Math.floor((source.length - 1) * indexLocation);
+  //   insertOrder.push(source[index]);
+  //   source.splice(index, 1);
+  // };
+
+  // rebalanceShaper(lessThanInsertOrder, lessThanRoot, .5);
+
   lessThanInsertOrder.push(lessThanRoot[Math.floor((lessThanRoot.length - 1) / 2)]);
   lessThanRoot.splice(Math.floor((lessThanRoot.length - 1) / 2), 1);
 
