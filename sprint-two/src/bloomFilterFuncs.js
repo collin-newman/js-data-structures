@@ -1,3 +1,38 @@
+var LimitedArray = function(limit) {
+  var storage = Array.from(new Array(limit), function() {
+    return 0;
+  });
+
+  var limitedArray = {};
+  limitedArray.get = function(index) {
+    checkLimit(index);
+    return storage[index];
+  };
+  limitedArray.set = function(index, value) {
+    checkLimit(index);
+    storage[index] = value;
+  };
+  limitedArray.each = function(callback) {
+    for (var i = 0; i < storage.length; i++) {
+      callback(storage[i], i, storage);
+    }
+  };
+
+  limitedArray.storage = function () {
+    return storage;
+  };
+
+  var checkLimit = function(index) {
+    if (typeof index !== 'number') {
+      throw new Error('setter requires a numeric index for its first argument');
+    }
+    if (limit <= index) {
+      throw new Error('Error trying to access an over-the-limit index');
+    }
+  };
+
+  return limitedArray;
+};
 
 //first hash function
 var hashTableHasher = function(str, max) {
@@ -63,4 +98,4 @@ let fnv1a = function (string, max) {
   return (hash >>> 0) % max;
 };
 
-export {hashTableHasher, DJB2_XOR, FNV_PRIMES, FNV_OFFSETS, fnv1a};
+// export {LimitedArray, hashTableHasher, DJB2_XOR, FNV_PRIMES, FNV_OFFSETS, fnv1a};
