@@ -1,10 +1,11 @@
-var LinkedList = function() { //testComment
+var DoublyLinkedList = function() {
   var list = {};
   list.head = null;
   list.tail = null;
 
   list.addToTail = function(value) {
     let newNode = Node(value);
+    newNode.previous = list.tail;
     if (list.head === null) {
       list.head = newNode;
       list.tail = newNode;
@@ -16,7 +17,15 @@ var LinkedList = function() { //testComment
 
   list.removeHead = function() {
     let oldHeadValue = list.head.value;
-    list.head = list.head.next;
+    if (list.head === list.tail) {
+      list.head = null;
+      list.tail = null;
+      return oldHeadValue;
+    }
+    if (list.head.next !== null) {
+      list.head = list.head.next;
+    }
+    list.head.previous = null;
     return oldHeadValue;
   };
 
@@ -37,12 +46,33 @@ var LinkedList = function() { //testComment
       if (node.next === null) {
         return;
       }
-
       recursor(node.next);
     };
 
     recursor(list.head);
     return result;
+  };
+
+  list.addToHead = function(value) {
+    if (list.head === null) {
+      let newNode = Node(value);
+      list.head = newNode;
+      list.tail = newNode;
+    } else {
+      let oldHead = list.head;
+      let newNode = Node(value);
+      list.head = newNode;
+      list.head.next = oldHead;
+      oldHead.previous = newNode;
+    }
+  };
+
+  list.removeTail = function() {
+    if (list.head === null && list.tail === null) {
+      return 'cannot remove a tail-less tail!';
+    }
+    list.tail = list.tail.previous;
+    list.tail.next = null;
   };
 
   return list;
@@ -53,6 +83,6 @@ var Node = function(value) {
 
   node.value = value;
   node.next = null;
+  node.previous = null;
   return node;
 };
-

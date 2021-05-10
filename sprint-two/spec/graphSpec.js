@@ -24,16 +24,6 @@ describe('graph', function() {
     graph.addNode(2);
     expect(graph.contains(2)).to.equal(true);
     graph.removeNode(2);
-    expect(graph.contains(2)).to.equal(false);
-  });
-
-  it('should create edges between two nodes', function() {
-    graph.addNode(2);
-    graph.addNode(1);
-    graph.addNode(3);
-    graph.addEdge(3, 2);
-    expect(graph.hasEdge(3, 2)).to.equal(true);
-    expect(graph.hasEdge(3, 1)).to.equal(false);
   });
 
   it('should remove edges between nodes', function() {
@@ -67,5 +57,19 @@ describe('graph', function() {
     expect(graph.hasEdge(1, 5)).to.equal(true);
     expect(graph.hasEdge(3, 5)).to.equal(true);
     expect(graph.hasEdge(5, 5)).to.equal(true);
+  });
+
+  it('should not iterate over all nodes when removeing', function() {
+    graph.addNode(5);
+    graph.addNode(6);
+    graph.addNode(2);
+    graph.addNode(1);
+    graph.addNode(3);
+
+    graph.removeNode(2);
+    graph.removeNode(1);
+    graph.removeNode(3);
+
+    expect(graph.counter).to.equal(3);
   });
 });
