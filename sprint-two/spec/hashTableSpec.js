@@ -48,17 +48,19 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
       hashTable.insert(firstName, lastName);
-      expect(hashTable.retrieve(firstName)).to.equal(lastName);
+
+
     });
+    expect(hashTable.retrieve('Alan')).to.equal('Turing');
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -72,5 +74,30 @@ describe('hashTable', function() {
     hashTable.remove('John');
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
+  });
+
+  it('should not iterate over the entire table when retrieving', function() {
+    hashTable.insert('Bob', 30);
+    hashTable.insert('Steve', 40);
+    hashTable.insert('Chris', 30);
+    hashTable.insert('Collin', 40);
+    hashTable.insert('dkjashdqoiwduhqwodiqwhd', 30);
+    hashTable.insert('Sarah', 40);
+    hashTable.insert('Kristina', 30);
+    hashTable.insert('Lexie', 40);
+    hashTable.insert('Bobbbb', 30);
+    hashTable.insert('Ste', 40);
+    hashTable.insert('Chriiiiis', 30);
+    hashTable.insert('Cozzz', 40);
+    hashTable.insert('Jiqwpeokqwpeokqw', 30);
+    hashTable.insert('Sa', 40);
+    hashTable.insert('Kri', 30);
+    hashTable.insert('Lex', 40);
+
+    hashTable.retrieve('Lexie');
+
+    let operations = hashTable.operations;
+
+    expect(operations).to.equal(1);
   });
 });

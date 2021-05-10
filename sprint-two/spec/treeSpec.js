@@ -2,7 +2,7 @@ describe('tree', function() {
   var tree;
 
   beforeEach(function() {
-    tree = Tree();
+    tree = Tree(5);
   });
 
   it('should have methods named "addChild" and "contains", and a property named "value"', function() {
@@ -41,4 +41,42 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(true);
   });
 
+  it('each node should have a parent property', function() {
+    let parent = tree;
+
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    expect(tree.children[0].parent).to.equal(tree);
+    expect(tree.children[1].parent).to.equal(tree);
+  });
+
+  it('should remove parent from tree while maintaining its children', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild('baby');
+
+    let baby = tree.children[0].children[1];
+    let separatedTree = tree.children[0].removeFromParent();
+
+    expect(separatedTree.parent).to.equal(null);
+    expect(separatedTree.children[1]).to.equal(baby);
+  });
+
+  it('should invoke the callback on every node in the tree', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild('baby');
+    let baby = tree.children[0].children[1];
+    expect(baby.value).to.equal('baby');
+
+    tree.traverse(function(item) {
+      return item + '!';
+    });
+
+    expect(baby.value).to.equal('baby!');
+  });
 });

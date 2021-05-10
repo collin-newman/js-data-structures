@@ -37,4 +37,63 @@ describe('binarySearchTree', function() {
     binarySearchTree.depthFirstLog(func);
     expect(array).to.eql([5, 2, 3, 7]);
   });
+
+  it('should not iterate over the entire tree when running contains', function() {
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(1);
+    binarySearchTree.insert(10);
+
+    binarySearchTree.operations.count = 0;
+    binarySearchTree.contains(3);
+    let operations = binarySearchTree.operations.count;
+    expect(operations).to.equal(3);
+
+    binarySearchTree.operations.count = 0;
+    binarySearchTree.contains(10);
+    operations = binarySearchTree.operations.count;
+    expect(operations).to.equal(3);
+
+    binarySearchTree.operations.count = 0;
+    binarySearchTree.contains(7);
+    operations = binarySearchTree.operations.count;
+    expect(operations).to.equal(2);
+  });
+
+  it('should log an entire layer before going to the next layer', function () {
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(1);
+    binarySearchTree.insert(10);
+
+    expect(binarySearchTree.breadthFirstLog()).to.eql([5, 2, 7, 1, 3, 6, 10]);
+  });
+
+
+
+  it('should rebalance when the depth ratio > 2', function() {
+    binarySearchTree.value = 10;
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(5);
+    binarySearchTree.insert(4);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(1);
+    binarySearchTree.insert(0);
+
+    let depthRatio = (binarySearchTree.getDepth()['maxDepth']) / (binarySearchTree.getDepth()['minDepth']);
+    // console.log('before balance', depthRatio);
+    binarySearchTree.rebalance();
+    depthRatio = (binarySearchTree.getDepth()['maxDepth']) / (binarySearchTree.getDepth()['minDepth']);
+    // console.log('after balance', depthRatio);
+    // console.log(binarySearchTree.getDepth());
+    expect(depthRatio < 2).to.equal(true);
+  });
 });
